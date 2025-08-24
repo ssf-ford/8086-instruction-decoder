@@ -1,5 +1,7 @@
 # Decode Instruction assigment from Computer Enhance
 
+Learning Zig in the meantime
+
 # Assigment 1
 
 Decode Intel 8086/8088 MOV instruction

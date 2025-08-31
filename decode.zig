@@ -154,6 +154,7 @@ fn decode_operation(b: []u8) DecodeError!Instruction {
             wide = b[0] & W_BIT > 0;
             direction = b[0] & D_BIT > 0;
             address_length = if (wide) 2 else 1;
+            reg = if (wide) "ax" else "al";
             if (direction == false) {
                 source = Operand.ADDR;
                 destination = Operand.ACC;
@@ -344,7 +345,7 @@ pub fn main() !void {
             Operand.SR => try std.fmt.bufPrint(&src_buffer, "{s}", .{instruction.sr}),
             Operand.IMM => try std.fmt.bufPrint(&src_buffer, "{d}", .{instruction.immediate}),
             Operand.ACC => try std.fmt.bufPrint(&src_buffer, "{s}", .{instruction.reg}),
-            Operand.ADDR => try std.fmt.bufPrint(&src_buffer, "{d}", .{instruction.address}),
+            Operand.ADDR => try std.fmt.bufPrint(&src_buffer, "[{d}]", .{instruction.address}),
         };
         dest_text = switch (instruction.destination) {
             Operand.REG => try std.fmt.bufPrint(&dest_buffer, "{s}", .{instruction.reg}),
@@ -352,7 +353,7 @@ pub fn main() !void {
             Operand.SR => try std.fmt.bufPrint(&dest_buffer, "{s}", .{instruction.sr}),
             Operand.IMM => try std.fmt.bufPrint(&dest_buffer, "{d}", .{instruction.immediate}),
             Operand.ACC => try std.fmt.bufPrint(&dest_buffer, "{s}", .{instruction.reg}),
-            Operand.ADDR => try std.fmt.bufPrint(&dest_buffer, "{d}", .{instruction.address}),
+            Operand.ADDR => try std.fmt.bufPrint(&dest_buffer, "[{d}]", .{instruction.address}),
         };
         std.debug.print("{s} {s}, {s}\n", .{ instruction.op, dest_text, src_text });
         i = i + instruction.inst_length + instruction.displacement_length + instruction.immediate_length + instruction.address_length;

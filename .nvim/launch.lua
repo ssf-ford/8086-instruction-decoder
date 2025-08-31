@@ -8,7 +8,7 @@ dap.configurations.zig = {
     program = '${workspaceFolder}/zig-out/bin/decode',
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
-    args = {},
+    args = { 'assignment_2/listing_0039_more_mov_operations' },
     -- prelaunchTask = "zig build",
     preLaunchTask = function()
       -- Try multiple build command variations for maximum compatibility
